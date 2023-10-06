@@ -1,31 +1,53 @@
-import { CalculatorService } from './calculator.service';
-import { TestBed } from '@angular/core/testing'
-import { LoggerService } from './logger.service';
+import {CalculatorService} from './calculator.service';
+import {LoggerService} from './logger.service';
+import {TestBed} from '@angular/core/testing';
+
 
 describe('CalculatorService', () => {
 
-  let calc: CalculatorService;
-  let loggerSpy: any;
+    let calculator: CalculatorService,
+        loggerSpy: any;
 
-  beforeEach(() => {
-    loggerSpy = jasmine.createSpyObj('LoggerService', ['log']);
-    TestBed.configureTestingModule({
-      providers: [
-        CalculatorService,
-        {provide: LoggerService, useValue: loggerSpy}
-      ]})
-    calc = TestBed.inject(CalculatorService);
-  });
+    beforeEach(()=> {
 
-  it('should add two numbers', () => {
-    const res = calc.add(2,3);
-    expect(res).toBe(5);
-    expect(loggerSpy.log).toHaveBeenCalledTimes(1);
-  })
+        console.log("Calling beforeEach");
 
-  it('should subtract two numbers' , () => {
-    const res = calc.subtract(5,3);
-    expect(res).toBe(2, 'Unexpected sustraction result');
-    expect(loggerSpy.log).toHaveBeenCalledTimes(1);
-  })
-})
+        loggerSpy = jasmine.createSpyObj('LoggerService', ["log"]);
+
+        TestBed.configureTestingModule({
+            providers: [
+                CalculatorService,
+                {provide: LoggerService, useValue: loggerSpy}
+            ]
+        });
+
+        calculator = TestBed.inject(CalculatorService);
+
+    });
+
+    it('should add two numbers', () => {
+
+        console.log("add test");
+
+        const result = calculator.add(2, 2);
+
+        expect(result).toBe(4);
+
+        expect(loggerSpy.log).toHaveBeenCalledTimes(1);
+
+    });
+
+
+    it('should subtract two numbers', () => {
+
+        console.log("subtract test");
+
+        const result = calculator.subtract(2, 2);
+
+        expect(result).toBe(0, "unexpected subtraction result");
+
+        expect(loggerSpy.log).toHaveBeenCalledTimes(1);
+
+    });
+
+});
